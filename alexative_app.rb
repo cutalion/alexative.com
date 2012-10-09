@@ -6,7 +6,11 @@ class AlexativeApp < Sinatra::Base
     haml :index
   end
 
-  get "/stylesheets/application.css" do
+  get "/application.css" do
     sass :application
+  end
+
+  get "/application.js" do
+    coffee :application
   end
 end
