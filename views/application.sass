@@ -40,51 +40,85 @@ ul
     font-size: 50%
     float: right
 
-.badge
-  background-repeat: no-repeat
-  background-size: 100px
-  background-position: center top
-  width: 150px
-  height: 175px
-  overflow: hidden
-  vertical-align: middle
-  text-align: center
-  position: relative
-  transition: background-size 300ms
-  -moz-transition: background-size 300ms
-  -webkit-transition: background-size 300ms
-  -o-transition: background-size 300ms
-
-  &:hover
-    background-size: 150px
-    opacity: 1
-
-    h1
-      opacity: 1
-
-  a
-    display: block
-    width: 100%
-    height: 100%
-    margin: 0
-    padding: 0
-    text-decoration: none
-    position: absolute
-
-  h1
-    font-size: 75%
-    margin-top: 150px
-    margin-bottom: 0
-    color: white
-    text-shadow: 1px 1px 0px rgba(0,0,0,0.5)
-    opacity: 0
-
-#badges
+#coderwall_badges
   margin-top: 75px
   text-align: justify
 
   .badge
     display: inline-block
+    background-repeat: no-repeat
+    background-size: 100px
+    background-position: center top
+    width: 150px
+    height: 175px
+    overflow: hidden
+    vertical-align: middle
+    text-align: center
+    position: relative
+    transition: background-size 300ms
+    -moz-transition: background-size 300ms
+    -webkit-transition: background-size 300ms
+    -o-transition: background-size 300ms
+
+    &:hover
+      background-size: 150px
+      opacity: 1
+
+      h1
+        opacity: 1
+
+    a
+      display: block
+      width: 100%
+      height: 100%
+      margin: 0
+      padding: 0
+      text-decoration: none
+      position: absolute
+
+    h1
+      font-size: 75%
+      margin-top: 150px
+      margin-bottom: 0
+      color: white
+      text-shadow: 1px 1px 0px rgba(0,0,0,0.5)
+      opacity: 0
+
+
+#stackoverflow_badges
+  .badge
+    display: inline-table
+    font-size: 65%
+    border: 5px solid orange
+    border-radius: 100px
+    box-shadow: 0 0 5px 1px rgba(255, 165, 0, 0.75), -1px -1px 0 0 rgba(255, 255, 255, 0.5), 1px 1px 0 0 rgba(0, 0, 0, 0.3)
+    height: 150px
+    width: 150px
+    margin-right: 10px
+    margin-bottom: 10px
+    overflow: hidden
+
+    .content
+      border-radius: 100px
+      box-shadow: 0 0 5px 1px rgba(255, 165, 0, 0.75), -1px -1px 0 0 rgba(0, 0, 0, 0.5), 1px 1px 0 0 rgba(255, 255, 255, 0.3)
+      text-shadow: -1px -1px 0 rgba(255, 255, 255, 0.5), 1px 1px 0 rgba(0, 0, 0, 0.3)
+      display: table-cell
+      vertical-align: middle
+      text-align: center
+      text-overflow: ellipsis
+      text-decoration: none
+      max-width: 100px
+      overflow: hidden
+      color: inherit
+
+  .badge.bronze
+    background: #cd7f32
+
+  .badge.silver
+    background: #c0c0c0
+
+  .badge.gold
+    background: #d4af37
 
 .social_icons
   clear: right
@@ -129,3 +163,6 @@ ul
 
     &.stackoverflow
       background-image: url(/images/stackoverflow.svg)
+
+.social_icons, #stackoverflow_badges, #coderwall_badges
+  max-width: 70%

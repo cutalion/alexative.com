@@ -1,26 +1,91 @@
+#
+# Coderwall Badges
+#
+
 class CoderwallBadges
   constructor: (@name, @badges) ->
 
   renderBadges: ->
     @renderBadge(badge, @name) for badge in @badges
 
-  renderBadge: (badge, name) ->
-    badge_element = @buildBadge(badge, name)
-    badges = document.getElementById "badges"
-    badges.appendChild(badge_element)
+  renderBadge: (data, author_name) ->
+    badge = new CoderwallBadgeModel(data)
+    badge.set('author_name': author_name)
+    view = new CodelwallBadgeView(model: badge)
+    view.render()
 
-  buildBadge: (data, name) ->
-    badge = document.createElement 'li'
-    badge.innerHTML = """
-      <a href=\"http://coderwall.com/#{name}\" target=\"_blank\" title="#{data.description}">&nbsp;</a>
-      <h1>#{data.name}</h1>
-    """
-    badge.className = "badge"
-    badge.title = data.description
-    badge.style.backgroundImage = "url(#{data.badge})"
-    badge
+CoderwallBadgeModel = Backbone.Model.extend({
+  image_url: ->
+    @get('badge')
+})
 
+CodelwallBadgeView = Backbone.View.extend({
+  tagName: 'li',
+  className: 'badge',
+  template: _.template("""
+      <a href=\"http://coderwall.com/<%= author_name %>\" target=\"_blank\" title="<%= description %>">&nbsp;</a>
+      <h1><%= name %></h1>
+  """),
+  render: ->
+    @$el.html(@template(@model.attributes))
+    @$el.title = @model.description
+    @$el.css('background-image', "url(#{@model.image_url()})")
+    $('#coderwall_badges').append @$el
+    return @
+})
 
 window.renderBadges = (response) ->
-  coderwall = new CoderwallBadges(response.data.name, response.data.badges)
+  coderwall = new CoderwallBadges(response.data.username, response.data.badges)
   coderwall.renderBadges()
+
+
+#
+# StackOverflow Badges
+#
+
+StackOverflowBadgesCollection = Backbone.Collection.extend({
+  url: "https://api.stackexchange.com/2.1/users/376378/badges?order=asc&sort=rank&site=stackoverflow"
+  parse: (response) ->
+    response.items
+})
+
+StackOverflowBadgeView = Backbone.View.extend({
+  tagName: 'li'
+
+  className: ->
+    "badge #{@model.get('rank')}"
+  template: _.template("""
+    <a href="<%= link %>" target="_blank" class="content">
+      <span class="name"><%= name %></span>
+      <br/>
+      <span class="count"><%= award_count %></span>
+    </a>
+  """)
+
+  render: ->
+    @$el.html(@template(@model.attributes))
+    return @
+})
+
+
+StackOverflowBadgesView = Backbone.View.extend({
+  el: $('#stackoverflow_badges'),
+  badges: new StackOverflowBadgesCollection,
+  initialize: ->
+    @listenTo(@badges, 'reset', @render)
+    @badges.fetch()
+
+  render: ->
+    @badges.each @renderBadge, @
+
+  renderBadge: (badge) ->
+    view = new StackOverflowBadgeView(model: badge)
+    @$el.append view.render().el
+})
+
+
+
+Zepto(($) ->
+  new StackOverflowBadgesView
+)
+
