@@ -80,7 +80,18 @@ StackOverflowBadgesView = Backbone.View.extend({
 
   renderBadge: (badge) ->
     view = new StackOverflowBadgeView(model: badge)
-    @$el.append view.render().el
+    el = view.render().$el
+    @defferedShow el
+    @$el.append el
+
+  defferedShow: (el) ->
+    el.css(opacity: 0)
+    setTimeout (-> el.animate({opacity: 1}, 500, 'linear')), @showTime()
+
+  showTime: ->
+    difference = 250 # ms
+    max = @badges.length * difference
+    return Math.random() * max + difference
 })
 
 
