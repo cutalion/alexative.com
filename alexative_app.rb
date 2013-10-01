@@ -11,6 +11,10 @@ class AlexativeApp < Sinatra::Base
     end
   end
 
+  get "/blog" do
+    haml :blog
+  end
+
   get "/application.css" do
     sass :application
   end

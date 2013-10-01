@@ -1,0 +1,18 @@
+%p alexative.com notes - notes associated with Alex.
+
+#notes
+  /%script{ src: "https://gist.github.com/cutalion/6762806.js" }
+
+:javascript
+  var printGist = function(gist) {
+    var note = $('<article></article>');
+    note.append('<link rel="stylesheet" type="text/css" href="https://gist.github.com' + gist.stylesheet + '">');
+    note.append('<h2>' + gist.description + '</h2>');
+    note.append(gist.div);
+    $('#notes').append(note);
+  };
+
+  $.ajax({
+      url: 'https://gist.github.com/6762806.json',
+      dataType: 'jsonp', success: printGist
+  });
