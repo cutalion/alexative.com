@@ -4,18 +4,26 @@
     notes - notes associated with Alex.
 
 #notes
-  /%script{ src: "https://gist.github.com/cutalion/6762806.js" }
+  %a{ href: "#!6762806" }
 
 :javascript
-  var printGist = function(gist) {
-    var note = $('<article></article>');
+  var printGist = function(gistId, gist) {
+    var note = $('<article id="#!' + gistId + '"></article>');
     note.append('<link rel="stylesheet" type="text/css" href="https://gist.github.com' + gist.stylesheet + '">');
     note.append('<h2>' + gist.description + '</h2>');
     note.append(gist.div);
     $('#notes').append(note);
   };
 
-  $.ajax({
-      url: 'https://gist.github.com/6762806.json',
-      dataType: 'jsonp', success: printGist
-  });
+  var requestGist = function(gistId) {
+    $.ajax({
+        url: 'https://gist.github.com/' + gistId + '.json',
+        dataType: 'jsonp',
+        success: function(gist){ printGist(gistId, gist); }
+    });
+  };
+
+  $('#notes a').each(function(i, link){
+    var gistId = $(link).attr('href').split("!").pop();
+    requestGist(gistId);
+  })

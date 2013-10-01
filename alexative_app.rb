@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class AlexativeApp < Sinatra::Base
   set :public_folder, File.dirname(__FILE__) + '/public'
   set :haml, format: :html5
@@ -12,7 +14,11 @@ class AlexativeApp < Sinatra::Base
   end
 
   get "/blog" do
-    haml :blog
+    if gist_id = params["_escaped_fragment_"]
+      get_gist_content(gist_id.to_i)
+    else
+      haml :blog
+    end
   end
 
   get "/application.css" do
@@ -21,5 +27,13 @@ class AlexativeApp < Sinatra::Base
 
   get "/application.js" do
     coffee :application
+  end
+
+  private
+
+  def get_gist_content(gist_id)
+    gist = URI.parse("https://gist.github.com/cutalion/#{gist_id}.json").read
+    gist = MultiJson.decode gist
+    gist['div']
   end
 end
