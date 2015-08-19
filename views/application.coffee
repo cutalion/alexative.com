@@ -81,12 +81,12 @@ StackOverflowBadgesView = Backbone.View.extend({
   renderBadge: (badge) ->
     view = new StackOverflowBadgeView(model: badge)
     el = view.render().$el
-    # @defferedShow el
+    @defferedShow el
     @$el.append el
 
   defferedShow: (el) ->
     el.css(opacity: 0)
-    setTimeout (-> el.animate({opacity: 1}, 500, 'linear')), @showTime()
+    setTimeout (-> el.css("opacity", 1)), @showTime()
 
   showTime: ->
     difference = 250 # ms
