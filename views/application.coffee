@@ -81,7 +81,7 @@ StackOverflowBadgesView = Backbone.View.extend({
   renderBadge: (badge) ->
     view = new StackOverflowBadgeView(model: badge)
     el = view.render().$el
-    @defferedShow el
+    # @defferedShow el
     @$el.append el
 
   defferedShow: (el) ->
