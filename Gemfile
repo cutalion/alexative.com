@@ -7,6 +7,6 @@ gem 'coffee-script'
 gem 'haml'
 gem 'multi_json'
 gem 'pry', group: :development
-gem 'sass'
+gem 'sassc'
 gem 'sinatra', require: 'sinatra/base'
 gem 'user_agent'
