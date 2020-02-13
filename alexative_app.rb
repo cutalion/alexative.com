@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
-require 'open-uri'
+require 'slim'
 
 class AlexativeApp < Sinatra::Base
   set :public_folder, File.dirname(__FILE__) + '/public'
-  set :haml, format: :html5
 
   get '/' do
-    haml :index
+    slim :index
   end
 
   get '/application.css' do

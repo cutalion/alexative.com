@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby '2.5.1'
+ruby '2.5.5'
 
 gem 'coffee-script'
-gem 'haml'
+gem 'slim'
 gem 'multi_json'
 gem 'pry', group: :development
 gem 'sassc'
